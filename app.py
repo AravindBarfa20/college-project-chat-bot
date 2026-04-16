@@ -10,14 +10,17 @@ load_dotenv()
 
 MODEL_NAME = "llama-3.3-70b-versatile"
 SYSTEM_PROMPT = (
-    "You are a Helpful College Project Assistant. Give clear, practical, and accurate help "
-    "for assignments, reports, coding projects, presentations, and viva preparation."
+    "You are Student Help Assistant, a clear and supportive academic assistant for students. "
+    "Help with assignments, reports, coding projects, presentations, viva preparation, "
+    "translation, and simplification. When a user asks for explanation, rewrite the answer in "
+    "simple language that is easy to understand. When a user asks for translation, preserve the "
+    "meaning, improve readability, and keep the result student-friendly."
 )
 STARTER_PROMPTS = [
     "Help me choose a final-year project topic in AI.",
     "Create a report outline for my college mini project.",
     "Explain this Python error in simple terms.",
-    "Prepare viva questions for my machine learning project.",
+    "Translate this paragraph into simple English for me.",
 ]
 
 
@@ -155,7 +158,7 @@ def render_sidebar(api_key: str) -> None:
             unsafe_allow_html=True,
         )
         st.markdown(f"**Model:** `{MODEL_NAME}`")
-        st.markdown("**Role:** Helpful College Project Assistant")
+        st.markdown("**Role:** Student Help Assistant")
         if st.button("Clear chat history", use_container_width=True):
             st.session_state.messages = []
             st.session_state.pending_prompt = None
@@ -166,9 +169,9 @@ def render_header() -> None:
     st.markdown(
         """
         <div class="hero-card">
-            <div class="hero-title">College Project Assistant</div>
+            <div class="hero-title">Student Help Assistant</div>
             <p class="hero-subtitle">
-                Plan projects, debug code, build reports, prepare presentations, and practice viva questions.
+                Study smarter with project guidance, translation help, simple explanations, report support, and viva preparation.
             </p>
         </div>
         """,
@@ -244,7 +247,7 @@ def pop_pending_prompt() -> Optional[str]:
 
 
 def main() -> None:
-    st.set_page_config(page_title="College Project Assistant", page_icon="🎓", layout="centered")
+    st.set_page_config(page_title="Student Help Assistant", page_icon="🎓", layout="centered")
     initialize_session_state()
     inject_styles()
 
@@ -254,7 +257,7 @@ def main() -> None:
     render_starter_prompts()
     render_chat_history()
 
-    chat_prompt = st.chat_input("Ask about your project, report, code, or presentation...")
+    chat_prompt = st.chat_input("Ask for project help, translation, explanations, reports, or presentation support...")
     prompt = pop_pending_prompt() or chat_prompt
 
     if prompt:
